@@ -2,14 +2,26 @@
     "name": "omnomnomogram",
     "version": "0.0.1",
     "description": "Omnomnom-o-gram",
-    "attachments": ["index.html"],
+    "attachments": ["index.html","static/images/background.jpg"],
     "modules": ["lib"],
     "load": "lib/app",
+    "less": {
+        "compress": true,
+        "compile": ["static/css/bootstrap.less"],
+        "remove_from_attachments": true
+    },
+    "handlebars": {
+        "all_partials": false,
+        "templates": "templates"
+    },
     "dependencies": {
         "attachments": null,
         "modules": null,
         "properties": null,
         "db": null,
-        "jquery": null
+        "jquery": null,
+		"less-precompiler": null,
+		"bootstrap": null,
+		"handlebars": null
     }
 }

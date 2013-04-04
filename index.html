@@ -1,18 +1,44 @@
-<h1>Hello, world!</h1>
-<ul id="usernames"></ul>
+<html>
+  <head>
+    <link rel="stylesheet" type="text/css" href="static/css/bootstrap.css" />
+  </head>
+  <body>
+    <div class="container-fluid">
+        <div class="navbar navbar-fixed-top">
+            <div class="navbar-inner">
+                <a class="brand" href="#">omnomnom-a-gram</a>
+            </div>
+        </div>
+        <div id="images"></div>
+    </div>
+  </body>
+    <script type="text/javascript" src="modules.js"></script>
+    <script type="text/javascript">
+        var db = require('db').current();
+        var $ = require('jquery');
+        var handlebars = require('handlebars');
+    </script>
 
-<script type="text/javascript" src="modules.js"></script>
-<script type="text/javascript">
-    var db = require('db').current();
-    var $ = require('jquery');
+    <script src="http://masonry.desandro.com/jquery.masonry.min.js"></script>
+    <script src="https://raw.github.com/desandro/imagesloaded/master/jquery.imagesloaded.min.js"></script>
+    <script type="text/javascript">
 
-    db.getView('omnomnomogram', 'usernames', function (err, data) {
-        if (err) {
-            // an error occurred
-            return alert(err);
-        }
-        for (var i = 0; i < data.rows.length; i++) {
-            $('<li/>').text(data.rows[i].key).appendTo('#usernames');
-        }
-    });
-</script>
+        db.getView('omnomnomogram', 'images', function (err, data) {
+            if (err) {
+                // an error occurred
+                return alert(err);
+            }
+            for (var i = 0; i < data.rows.length; i++) {
+                context = data.rows[i]['value'];
+                var html = handlebars.templates['image.html'](context);
+                $('#images').append(html)
+            }
+
+            var $container = $('#images');
+            $container.masonry({
+                itemSelector : '.item',
+                columnWidth : 240
+            });
+        });
+    </script>
+</html>
